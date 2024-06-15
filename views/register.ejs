@@ -164,6 +164,7 @@
 
               $("#message").html(`<div class ="alert alert-success" role = "alert">Data inserted successfully.</div>`);
               setTimeout(() => {
+                localStorage.setItem('userId',response.userId)
                 window.location.replace(response.url);
               }, 200);
             } else {

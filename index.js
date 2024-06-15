@@ -37,7 +37,7 @@ app.get("/profile", (req,res)=>{
         if(err){
             res.send(err)
         }else{
-            console.log(rows.name);
+            console.log(rows);
             // res.render("read.ejs", {rows})
             res.render("profile.ejs", {rows})
         }
@@ -52,11 +52,11 @@ app.post("/create", (req,res)=>{
     var username = req.body.username;
     var password = req.body.password;
 
-    connection.query("INSERT INTO user_info(name,email,user_name,password) values(?,?,?,?) ", [name,email,username,password],function(err,row){
+    connection.query("INSERT INTO user_info(name,email,user_name,password) values(?,?,?,?) ", [name,email,username,password],function(err,rows){
         if(err){
             res.send({status: 500, message: err})
         }else{
-            const lastInsertedId = row.insertId;
+            const lastInsertedId = rows.insertId;
             connection.query("INSERT INTO user_detail (user_id) values(?)", [lastInsertedId],function (err) {
                 if (err) {
                     return console.error('error inserting into user_detail: ' + err.stack);
@@ -65,8 +65,36 @@ app.post("/create", (req,res)=>{
                 
             })
             req.session.userid = lastInsertedId;
+            // sessionStorage.setItem(“currentloggedin”,username);
+            // localStorage.setItem('userid',lastInsertedId);
 
-            res.send({status: 201, message: "Submitted",url: "/profile" })
+            res.send({status: 201, message: "Submitted",url: "/profile", userId : lastInsertedId })
+        }
+    })
+})
+
+app.post("/edit",(req,res)=>{
+    var name = req.body.name;
+    var about = req.body.about;
+    var phone = req.body.phone;
+    var email = req.body.email;
+    var twitter = req.body.twitter;
+    var instagram = req.body.instagram;
+    var userid = req.body.userid;
+
+
+
+    connection.query("UPDATE user_detail SET about =?,phone = ?,instagram = ?,twitter = ? WHERE user_id = ?",[about,phone,instagram,twitter,userid],function(err,rows){
+        if(err){
+            res.send({status:500,message:err})
+        }else{
+            connection.query("UPDATE user_info SET name = ?,email= ? WHERE id = ? ",[name,email,userid],function(err,rows){
+                if(err){
+                    return console.error('error inserting into user_detail: ' + err.stack);
+                }
+                console.log('Updated Successfully');
+            })
+            res.send({status: 201, message: "Updated", url: "/profile"})
         }
     })
 })
