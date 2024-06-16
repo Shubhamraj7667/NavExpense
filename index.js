@@ -29,6 +29,58 @@ app.get("/register", (req,res)=>{
     // res.redirect("./register.html")
 });
 
+//for dashboard
+
+app.get("/dashboard", (req,res)=>{
+    connection.query("SELECT * FROM `user_info` LEFT JOIN user_detail ON user_info.id = user_detail.user_id WHERE user_info.id = ?",[req.session.userid], function(err,rows){
+        if(err){
+            res.send(err)
+        }else{
+            console.log(rows);
+            // res.render("read.ejs", {rows})
+            res.render("dashboard.ejs", {rows})
+        }
+    } )})
+
+    //for expense
+
+    app.get("/expense", (req,res)=>{
+        connection.query("SELECT * FROM `user_info` WHERE user_info.id = ?",[req.session.userid], function(err,rows){
+            if(err){
+                res.send(err)
+            }else{
+                console.log(rows);
+                // res.render("read.ejs", {rows})
+                res.render("expense.ejs", {rows})
+            }
+        } )})
+
+
+        
+
+
+// for inserting expense data
+app.post("/credit",(req,res)=>{
+    var earn = req.body.earn;
+    var spend = req.body.spend;
+    var comment = req.body.comment;
+    var userid = req.body.userid;
+
+    console.log(userid);
+
+    connection.query("INSERT INTO user_credit(earn,spend,comment,user_id)  values(?,?,?,?)",[earn,spend,comment,userid],function(err,rows){
+     if(err){
+      res.send({status: 500, message: err})  
+     }else
+     res.send({status: 201, message : "Updated", url : "/dashboard"})
+    })
+   
+})
+
+
+
+    //for profile
+
 app.get("/profile", (req,res)=>{
 
     console.log( req.session.userid);
@@ -73,6 +125,8 @@ app.post("/create", (req,res)=>{
     })
 })
 
+//edit operation
+
 app.post("/edit",(req,res)=>{
     var name = req.body.name;
     var about = req.body.about;
@@ -81,6 +135,7 @@ app.post("/edit",(req,res)=>{
     var twitter = req.body.twitter;
     var instagram = req.body.instagram;
     var userid = req.body.userid;
+    var username = req.body.username;
 
 
 
@@ -88,7 +143,7 @@ app.post("/edit",(req,res)=>{
         if(err){
             res.send({status:500,message:err})
         }else{
-            connection.query("UPDATE user_info SET name = ?,email= ? WHERE id = ? ",[name,email,userid],function(err,rows){
+            connection.query("UPDATE user_info SET name = ?,email= ?, user_name =? WHERE id = ? ",[name,email,username,userid],function(err,rows){
                 if(err){
                     return console.error('error inserting into user_detail: ' + err.stack);
                 }
