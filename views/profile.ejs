@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +46,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="/dashboard" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">NavExpense</span>
       </a>
@@ -502,7 +504,7 @@
         </a>
       </li>End Error 404 Page Nav -->
 
-      
+
 
     </ul>
 
@@ -514,7 +516,7 @@
       <h1>Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
           <li class="breadcrumb-item">Users</li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
@@ -532,10 +534,10 @@
               <h2><%-rows[0].name%></h2>
               <h3><%-rows[0].user_name%></h3>
               <div class="social-links mt-2">
-                <a href="<%-rows[0].twitter%>" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="<%-rows[0].facebook%>" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="<%-rows[0].instagram%>" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="<%-rows[0].linkedin%>" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                <a href="<%-rows[0].twitter%>" class="twitter" target="_blank"><i class="bi bi-twitter"></i></a>
+                <a href="<%-rows[0].facebook%>" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                <a href="<%-rows[0].instagram%>" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="<%-rows[0].linkedin%>" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
               </div>
             </div>
           </div>
@@ -550,7 +552,8 @@
               <ul class="nav nav-tabs nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                  <button class="nav-link active" data-bs-toggle="tab"
+                    data-bs-target="#profile-overview">Overview</button>
                 </li>
 
                 <li class="nav-item">
@@ -562,7 +565,8 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change
+                    Password</button>
                 </li>
 
               </ul>
@@ -572,19 +576,19 @@
                   <h5 class="card-title">About</h5>
                   <p class="small fst-italic"><%-rows[0].about%></p>
 
-                <h5 class="card-title">Profile Details</h5>
+                  <h5 class="card-title">Profile Details</h5>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
                     <div class="col-lg-9 col-md-8"><%-rows[0].name%></div>
                   </div>
 
-                  
 
-                  
 
-                  
-                  
+
+
+
+
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
@@ -606,18 +610,20 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form id = "edit_form">
+                  <form id="edit_form">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <img src="assets/img/profile-img.jpg" alt="Profile">
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i
+                              class="bi bi-upload"></i></a>
+                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                              class="bi bi-trash"></i></a>
                         </div>
                       </div>
                     </div>
-                    <input type="hidden" value = "<%-rows[0].user_id%>" name ="userid" >
+                    <input type="hidden" value="<%-rows[0].user_id%>" name="userid">
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
@@ -629,7 +635,8 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">User Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="username" type="text" class="form-control" id="fullName" value="<%-rows[0].user_name%>">
+                        <input name="username" type="text" class="form-control" id="fullName"
+                          value="<%-rows[0].user_name%>">
                       </div>
                     </div>
 
@@ -637,7 +644,7 @@
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                       <div class="col-md-8 col-lg-9">
                         <!-- <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea> -->
-                         <input name = "about" type="text" class = "form-control" id = "about" value = "<%-rows[0].about%>">
+                        <input name="about" type="text" class="form-control" id="about" value="<%-rows[0].about%>">
                       </div>
                     </div>
 
@@ -679,14 +686,15 @@
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value = "<%-rows[0].email%>" >
+                        <input name="email" type="email" class="form-control" id="Email" value="<%-rows[0].email%>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value = "<%-rows[0].twitter%>" >
+                        <input name="twitter" type="text" class="form-control" id="Twitter"
+                          value="<%-rows[0].twitter%>">
                       </div>
                     </div>
 
@@ -700,7 +708,8 @@
                     <div class="row mb-3">
                       <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value = "<%-rows[0].instagram%>" >
+                        <input name="instagram" type="text" class="form-control" id="Instagram"
+                          value="<%-rows[0].instagram%>">
                       </div>
                     </div>
 
@@ -817,7 +826,8 @@
     </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -831,12 +841,17 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
 
 
   <script>
-    $(document).ready(function(){
-      $('#edit_form').submit(function(e){
+    $(document).ready(function () {
+
+
+    
+
+      $('#edit_form').submit(function (e) {
         e.preventDefault();
         var ajaxData = $(this).serialize();
 
@@ -846,19 +861,19 @@
           data: ajaxData,
           success: function (response) {
 
-            if(response.status == 201){
+            if (response.status == 201) {
               $("#message").html(`<div class = "alert alert-danger" role = "alert">Data Edited Successfully.!</div>`);
-                
-              setTimeout(()=>{
+
+              setTimeout(() => {
                 window.location.replace(response.url);
-              },200);
-            }else{
+              }, 200);
+            } else {
               $("#message").html(`<div class = "alert alert-danger" role = "alert">Something Went Wrong.!</div>`)
 
             }
-            
+
           },
-          error: function (status,err){
+          error: function (status, err) {
             console.log(err);
           }
         });

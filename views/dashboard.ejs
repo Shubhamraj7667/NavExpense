@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,9 +46,9 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="/dashboard" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <span class="d-none d-lg-block">NavExpense</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -275,7 +277,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="/dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -283,7 +285,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/expense">
-          <i class="bi bi-file-earmark"></i>
+          <i class="bi bi-card-list"></i>
           <span>Expense</span>
         </a>
       </li>
@@ -413,7 +415,7 @@
       </li><!-- End Tables Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed disabled" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -461,7 +463,7 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="/profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
@@ -502,12 +504,6 @@
         </a>
       </li><!-- End Error 404 Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
 
     </ul>
 
@@ -519,7 +515,7 @@
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
@@ -557,8 +553,9 @@
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6>₹<%-totalCredit%></h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span
+                        class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
                   </div>
@@ -592,8 +589,9 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6>₹<%-totalDebit%></h6>
+                      <span class="text-success small pt-1 fw-bold">8%</span> <span
+                        class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
                   </div>
@@ -628,8 +626,9 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                      <h6>₹<%-totalCredit-totalDebit%></h6>
+                      <span class="text-danger small pt-1 fw-bold">12%</span> <span
+                        class="text-muted small pt-2 ps-1">decrease</span>
 
                     </div>
                   </div>
@@ -664,16 +663,28 @@
 
                   <script>
                     document.addEventListener("DOMContentLoaded", () => {
+                      const totalDebitGraph = <%= JSON.stringify(totalDebitGraph) %>;
+                      const totalCreditGraph = <%= JSON.stringify(totalCreditGraph) %>;
+                      // const dates = <%= JSON.stringify(new Date(dates).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })) %>;
+                      const totalSevingGraph = <%= JSON.stringify(totalSevingGraph) %>;
+
+                      const encodedDates = " <%=  JSON.stringify(dates) %>";
+                      const decodedString = encodedDates.replace(/&#34;/g, '"');
+                      const dates = JSON.parse(`${decodedString}`);
+                      // const dates = <%= JSON.stringify(dates) %>;
+
+                      console.log(dates);
+
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
+                          name: 'Debit',
+                          data: totalDebitGraph,
                         }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
+                          name: 'Credit',
+                          data: totalCreditGraph
                         }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
+                          name: 'Savings',
+                          data: totalSevingGraph
                         }],
                         chart: {
                           height: 350,
@@ -703,12 +714,12 @@
                           width: 2
                         },
                         xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                          type: 'date',
+                          categories: dates
                         },
                         tooltip: {
                           x: {
-                            format: 'dd/MM/yy HH:mm'
+                            format: 'dd/MM/yy'
                           },
                         }
                       }).render();
@@ -721,7 +732,7 @@
               </div>
             </div><!-- End Reports -->
 
-            <!-- Recent Sales -->
+            <!-- Recent Transaction -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
@@ -741,54 +752,50 @@
                 <div class="card-body">
                   <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
+
+
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
+                        <!-- <th scope="col">Customer</th> -->
+                        <th scope="col">Date</th>
+                        <th scope="col">Price(₹)</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Comment</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>Brandon Jacob</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2147</a></th>
-                        <td>Bridie Kessler</td>
-                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                        <td>$47</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2049</a></th>
-                        <td>Ashleigh Langosh</td>
-                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                        <td>$147</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Angus Grady</td>
-                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                        <td>$67</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Raheem Lehner</td>
-                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                        <td>$165</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
+                      <% userCredit.map((eachData)=> { %>
+
+                        <tr>
+                          <th scope="row"><a href="#">#2457</a></th>
+                          <!-- <td>Brandon Jacob</td>
+                        <td><a href="#" class="text-primary">At praesentium minu</a></td> -->
+                          <td>
+                            <%= new Date(eachData.transaction_date).toLocaleString('en-US', { year: 'numeric' ,
+                              month: 'long' , day: 'numeric' })%>
+                          </td>
+                          <!-- <td><%-eachData.transaction_date%></td> -->
+                          <td><%-eachData.amount%></td>
+
+
+                          <td>
+                            <span
+                              class="badge <%= eachData.transaction_type === 'credit' ? 'bg-success' : 'bg-danger' %>">
+                              <%- eachData.transaction_type %>
+
+                            </span>
+                          </td>
+                          <td><%- eachData.comment%></td>
+
+                        </tr>
+                        <% }) %>
+
                     </tbody>
                   </table>
+
+
 
                 </div>
 
@@ -796,7 +803,7 @@
             </div><!-- End Recent Sales -->
 
             <!-- Top Selling -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="card top-selling overflow-auto">
 
                 <div class="filter">
@@ -867,7 +874,7 @@
                 </div>
 
               </div>
-            </div><!-- End Top Selling -->
+            </div>End Top Selling -->
 
           </div>
         </div><!-- End Left side columns -->
@@ -977,42 +984,39 @@
                     radar: {
                       // shape: 'circle',
                       indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
+                        name: 'Rent',
+                        max: 1000
+                      },
+                      {
+                        name: 'Food',
+                        max: 1000
+                      },
+                      {
+                        name: 'Snacks',
+                        max: 1000
+                      },
+                      {
+                        name: 'Movie',
+                        max: 1000
+                      },
+                      {
+                        name: 'Emergency',
+                        max: 1000
+                      },
+                      {
+                        name: 'Miscelenious',
+                        max: 1000
+                      }
                       ]
                     },
                     series: [{
                       name: 'Budget vs spending',
                       type: 'radar',
                       data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
+                        value: [420, 300, 200, 350, 500, 180],
+                        name: 'Allocated Budget'
+                      },
+                      
                       ]
                     }]
                   });
@@ -1038,7 +1042,7 @@
             </div>
 
             <div class="card-body pb-0">
-              <h5 class="card-title">Website Traffic <span>| Today</span></h5>
+              <h5 class="card-title">Traffic <span>| Today</span></h5>
 
               <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
@@ -1072,25 +1076,25 @@
                         show: false
                       },
                       data: [{
-                          value: 1048,
-                          name: 'Search Engine'
-                        },
-                        {
-                          value: 735,
-                          name: 'Direct'
-                        },
-                        {
-                          value: 580,
-                          name: 'Email'
-                        },
-                        {
-                          value: 484,
-                          name: 'Union Ads'
-                        },
-                        {
-                          value: 300,
-                          name: 'Video Ads'
-                        }
+                        value: 1048,
+                        name: 'Search Engine'
+                      },
+                      {
+                        value: 735,
+                        name: 'Direct'
+                      },
+                      {
+                        value: 580,
+                        name: 'Email'
+                      },
+                      {
+                        value: 484,
+                        name: 'Union Ads'
+                      },
+                      {
+                        value: 300,
+                        name: 'Video Ads'
+                      }
                       ]
                     }]
                   });
@@ -1101,7 +1105,7 @@
           </div><!-- End Website Traffic -->
 
           <!-- News & Updates Traffic -->
-          <div class="card">
+          <!-- <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -1147,14 +1151,14 @@
                   <img src="assets/img/news-5.jpg" alt="">
                   <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
                   <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
-                </div>
+                </div> -->
 
-              </div><!-- End sidebar recent posts-->
+        </div><!-- End sidebar recent posts-->
 
-            </div>
-          </div><!-- End News & Updates -->
+      </div>
+      </div><!-- End News & Updates -->
 
-        </div><!-- End Right side columns -->
+      </div><!-- End Right side columns -->
 
       </div>
     </section>
@@ -1175,7 +1179,8 @@
     </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

@@ -44,9 +44,9 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="/dashboard" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <span class="d-none d-lg-block">NavExpense</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -281,9 +281,15 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="/expense">
-          <i class="bi bi-file-earmark"></i>
+          <i class="bi bi-card-list"></i>
+          <span>Expense</span>
+        </a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link " href="/expense">
+          <i class="bi bi-card-list"></i>
           <span>Expense</span>
         </a>
       </li>
@@ -502,12 +508,7 @@
         </a>
       </li><!-- End Error 404 Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link " href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
+      
 
     </ul>
 
@@ -519,9 +520,9 @@
       <h1>Record your transaction</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Blank</li>
+          <li class="breadcrumb-item active">expense</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -533,18 +534,42 @@
           
           <form id = "input_form">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Credit</label>
-              <input name = "earn" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <label for="exampleInputEmail1" class="form-label">Amount</label>
+              <input name = "amount" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <!-- <div id="emailHelp" class="form-text"></div> -->
             </div>
+            <hr>
             <input type="hidden"  name ="userid" value = "<%-rows[0].id%>" >
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Debit</label>
-              <input name = "spend" type="number" class="form-control" id="exampleInputPassword1">
+              
+              <label for="exampleInputPassword1" class="form-label">Transaction type : </label>
+              
+              <select class="form-select" aria-label="Default select example" name = "transaction_type">
+                <option selected>----</option>
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option>
+              </select>
+              <!-- <label for="exampleInputPassword1" class="form-label">Transaction type</label>
+              <input name = "transaction_type" type="text" class="form-control" id="exampleInputPassword1"> -->
             </div>
+            <hr>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">comment</label>
               <input name = "comment" type="text" class="form-control" id="exampleInputPassword1">
+            </div>
+            <hr>
+            <div class="mb-3">
+              
+              <label for="exampleInputPassword1" class="form-label">Transaction date : </label>
+              
+              <input class="datetime" type="date" aria-label="Default select example" name = "transaction_date">
+                <!-- <input  > -->
+                <!-- <option selected>----</option>
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option> -->
+              <!-- </select> -->
+              <!-- <label for="exampleInputPassword1" class="form-label">Transaction type</label>
+              <input name = "transaction_type" type="text" class="form-control" id="exampleInputPassword1"> -->
             </div>
             <!-- <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
