@@ -145,6 +145,11 @@ app.get("/dashboard", (req, res) => {
 //for expense
 
 app.get("/expense", (req, res) => {
+    const userId = req.session.userid;
+
+    if(!userId){
+        res.redirect("/login")
+    }
     connection.query("SELECT * FROM `user_info` WHERE user_info.id = ?", [req.session.userid], function (err, rows) {
         if (err) {
             res.send(err)
@@ -168,6 +173,11 @@ app.get("/login", (req, res) => {
 
 // for inserting expense data
 app.post("/credit", (req, res) => {
+    const userId = req.session.userid;
+
+    if(!userId){
+        res.redirect("/login")
+    }
     var amount = req.body.amount;
     var transaction_type = req.body.transaction_type;
     var comment = req.body.comment;
@@ -190,6 +200,12 @@ app.post("/credit", (req, res) => {
 //for profile
 
 app.get("/profile", (req, res) => {
+
+    const userId = req.session.userid;
+
+    if(!userId){
+        res.redirect("/login")
+    }
 
     // var LocalStorage = require('node-localstorage').LocalStorage,
     // localStorage = new LocalStorage('./scratch');
@@ -238,6 +254,11 @@ app.post("/create", (req, res) => {
 //edit operation
 
 app.post("/edit", (req, res) => {
+    const userId = req.session.userid;
+
+    if(!userId){
+        res.redirect("/login")
+    }
     var name = req.body.name;
     var about = req.body.about;
     var phone = req.body.phone;
@@ -296,6 +317,17 @@ app.get("/graph", (req, res) => {
             res.status(201).json({ 'status': 200, 'data': rows });
         }
     });
+})
+
+//for deleting entry
+app.get("/delete",(req,res)=>{
+    connection.query("DELETE FROM user_credit WHERE user_id = ?",[req.session.userid],function(err){
+        if(err){
+            res.send(err);
+        }else{
+            res.send({status: 200,message:"Deleted Successfully"})
+        }
+    })
 })
 
 
