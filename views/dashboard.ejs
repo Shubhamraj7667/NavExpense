@@ -176,7 +176,7 @@
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="login">
+        <a class="nav-link collapsed" href="/login">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
@@ -468,8 +468,15 @@
                           </td>
                           <td><%- eachData.comment%></td>
                           <td>
-                            <button class="btn btn-danger" id = "delete_transaction">Delete</i></button>
-                            <button class="btn btn-success edit_transaction">Edit</button>
+
+                            <button class="btn btn-danger delete_transaction" data-id = "<%-eachData.id%>">Delete</button>
+                            <button type="button" class="btn btn-success edit_transaction" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id = "<%-eachData.id%>">
+                              Edit
+                            </button>
+                            
+                            
+                            
+                            <!-- <button class="btn btn-success edit_transaction">Edit</button> -->
                           </td>
                         </tr>
                         
@@ -477,7 +484,57 @@
 
                     </tbody>
                   </table>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
+                        <% rows.map((eachData)=> { %>
+                        <div class="modal-body">
+                          <div class="row">
+                            <!-- <input type = "hidden" id = "id_edit"> -->
+                
+                            <div class="col-md-12">
+                              <div class="error-message-update">
+                
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              
+                              <label for="">Date</label>
+                              <input type="date" id ="edit_fname"  class="form-control" value = "<%-eachData.transaction_date%>">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="">Price</label>
+                              <input type="text" id ="edit_lname" class="form-control" value = "<%-eachData.amount%>">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="">Status</label>
+                              <select class="form-select" aria-label="Default select example" name = "transaction_type" value = "<%-eachData.transaction_type%>">
+                                <option selected>----</option>
+                                <option value="credit">Credit</option>
+                                <option value="debit">Debit</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="">Comment</label>
+                              <input type="text" id ="edit_section" class="form-control" value = "<%-eachData.comment%>">
+                            </div>
+                          </div>
+                        </div>
+                        <% }) %>
+
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary id_edit">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
 
                 </div>
@@ -827,17 +884,22 @@
 
 
     $(document).ready(function(){
-      $("#delete_transaction").click(function(e){
+      $(".delete_transaction").click(function(e){
        e.preventDefault();
 
-       var creditId = $("#creditId").val();
+       var creditId = $(this).data("id");
+       console.log(creditId);
        
        $.ajax({
         type: "post",
         url: "/delete",
-        data: creditId,
+        data: { id: creditId },
         success: function (response) {
           if(response.status == 200){
+
+            setTimeout(()=>{
+              window.location.replace(response.url);
+            },200);
             $("#message").html(`<div class = "alert alert-success" role = "alert">Data deleted successfully.</div>`);
             $("#user_table").html("");
           }else{
@@ -853,7 +915,59 @@
       });
       })
 
+      
     })
+
+    $(document).ready(function(){
+      $(".edit_transaction").click(function(e){
+       e.preventDefault();
+
+      var editid =  $(this).data("id");
+
+       $.ajax({
+        type: "get",
+        url: "/get_credit",
+        data: {id : editid},
+        success: function (response) {
+        },
+        error: function(err){
+          console.log(err);
+        }
+      });
+
+      
+      })
+    })
+
+
+      
+      // $.ajax({
+      //   type: "post",
+      //   url: "/edit_transaction",
+      //   data: "data",
+      //   success: function (response) {
+
+      //     if(response.status == 200){
+
+      //       SetTimeout(()=>{
+      //         window.location.replace(response.url);
+      //       },200);
+      //       $("#message").html(`<div class = "alert alert-success" role = "alert">Data deleted successfully.</div>`);
+      //       $("#user_table").html("");
+      //     }else{
+      //       if(response.status != 200){
+      //         $("#message").html(`<div class = "alert alert-danger" role = "alert">Something Went Wrong.!</div>`);
+      //     }
+
+      //     }
+          
+      //   },
+      //   error: function (status,err){
+      //     console.log(err);
+      //   }
+      // });
+
+   
   </script>
 
 </body>

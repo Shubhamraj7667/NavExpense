@@ -320,12 +320,33 @@ app.get("/graph", (req, res) => {
 })
 
 //for deleting entry
-app.get("/delete",(req,res)=>{
-    connection.query("DELETE FROM user_credit WHERE user_id = ?",[req.session.userid],function(err){
+app.post("/delete",(req,res)=>{
+
+    const deleted_id = req.body.id;
+
+
+    connection.query("DELETE FROM user_credit WHERE id = ?",[deleted_id],function(err,rows){
         if(err){
             res.send(err);
         }else{
-            res.send({status: 200,message:"Deleted Successfully"})
+            console.log(deleted_id);
+            
+            res.send({status: 200,message:"Deleted Successfully", url: "/dashboard"})
+        }
+    })
+})
+
+
+//for editing transaction
+
+app.get("/get_credit",(req,res)=>{
+    const edit_id = req.body.id;
+
+    connection.query("SELECT * FROM user_credit WHERE id = ?",[edit_id], function(err,rows){
+        if(err){
+            console.log(err);
+        }else{
+            res.send({rows});
         }
     })
 })
