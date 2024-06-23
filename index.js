@@ -33,6 +33,7 @@ app.get("/register", (req, res) => {
 
 app.get("/dashboard", (req, res) => {
 
+    
     // connection.query(" SELECT user_info.*, user_credit.*, (SELECT SUM(amount) FROM user_credit WHERE user_id = ? AND transaction_type = 'credit') AS total_credit,(SELECT SUM(amount) FROM user_credit WHERE user_id = ? AND transaction_type = 'debit') AS total_debit FROM user_info  LEFT JOIN user_credit ON user_info.id = user_credit.user_id WHERE user_info.id = ?", [req.session.userid,req.session.userid,req.session.userid],function(err,rows){
     //     if(err){
     //         res.send({status: 500, message : err})
