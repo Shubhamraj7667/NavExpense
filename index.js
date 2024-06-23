@@ -141,6 +141,45 @@ app.get("/dashboard", (req, res) => {
 
 
 
+//for practice
+
+app.get("/practice", (req,res) =>{
+
+    connection.query("SELECT * from user_info ", function(err,rows){
+        if(err){
+            console.log(err);
+        }else{
+
+            
+            
+            res.render("practice.ejs",{rows})
+              
+        }
+    })
+    
+})
+
+//practice
+
+// app.get("/data",(req,res)=>{
+  
+    
+
+//     connection.query("SELECT * from user_info ", function(err,rows){
+//         if(err){
+//             console.log(err);
+//         }else{
+
+            
+            
+//             res.render({rows})
+              
+//         }
+//     })
+// })
+
+
+
 
 
 //for expense
