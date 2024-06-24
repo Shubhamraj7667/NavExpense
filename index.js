@@ -178,6 +178,40 @@ app.get("/practice", (req,res) =>{
 //     })
 // })
 
+// practice del
+
+app.post("/delete_practice",(req,res)=>{
+    var iddel = req.body.id;
+
+    connection.query("DELETE FROM user_info WHERE id = ?",[iddel],function (err,rows) {
+        if(err){
+            console.log(err);
+        }else{
+            res.send({status: 200, message : "deleted Successfully", url: "/practice"})
+            
+        }
+        
+    })
+})
+
+
+//practice edit get
+
+app.get("/edit_practice",(req,res)=>{
+    var idedit = req.query.id;
+    console.log("idedit :" , req.query);
+    connection.query("SELECT * FROM user_info WHERE id = ?",[idedit],function(err,row){
+        if(err){
+            console.log(err);
+        }else{
+            res.send({status: 200, message: "GET data successfully",data: row})
+        }
+    })
+})
+
+app.get("/editform",(req,res)=>{
+    res.render("editform.ejs")
+})
 
 
 

@@ -46,6 +46,8 @@
           </div>
         </div>
       </nav>
+     
+      <hr>
 
     <button type="button" class="btn btn-primary" id = "data_table" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
@@ -63,22 +65,27 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+
+                  <table class="table">
+
+                  <thead>
+                    <tr>
+                        <th scope="col" name = "id" >#</th>
+                        <th scope="col" name = "name">Name</th>
+                        <th scope="col" name = "user_name">User</th>
+                        <th scope="col" name = "email">Email</th>
+                        <th scope="col" name = "password">Password</th>
+                        <th scope="col" name = "action">Action</th>
+                    </tr>
+                    </thead>
+                  </table>
                     <% if(rows.length >0) { %>
 
                         <%rows.map((eachData)=>{ %>
 
                     <table class="table">
                          
-                        <thead>
-                        <tr>
-                            <th scope="col" name = "id" >#</th>
-                            <th scope="col" name = "name">Name</th>
-                            <th scope="col" name = "user_name">User</th>
-                            <th scope="col" name = "email">Email</th>
-                            <th scope="col" name = "password">Password</th>
-                        </tr>
-                        </thead>
+                       
                        
                         <tbody>
                             
@@ -86,12 +93,16 @@
 
                         <tr>
                             <th scope="row"><%=eachData.id%></th>
+                            
                             <td><%=eachData.name%></td>
                             <td><%=eachData.user_name%></td>
                             
                             <td><%=eachData.email%></td>
                             <td><%=eachData.password%></td>
+                            <td><button class="btn btn-danger id_delete" data-id = "<%=eachData.id%>">Delete</button></td>
+                            <td><button class="btn btn-success edit_btn" data-id = "<%=eachData.id%>" data-bs-toggle="modal" data-bs-target="#editmodal">Edit</button></td>
                         </tr>
+                        
                         
                         </tbody>
                     </table>
@@ -107,6 +118,12 @@
             
                         <%}%>
 
+                        
+
+                        
+
+
+
 
                 
                 </div>
@@ -118,13 +135,64 @@
         </div>
             </div>
         </div>
+
+       
+
+        <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="modal-body">
+                  <div class="row">
+                    <input type = "hidden" id = "id_edit">
+        
+                    <div class="col-md-12">
+                      <div class="error-message-update">
+        
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      
+                      <label for="">Name</label>
+                      <input type="text" id ="edit_name"  class="form-control" >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="">User Name</label>
+                      <input type="text" id ="edit_username" class="form-control" >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="">Email</label>
+                      <input type="text" id ="edit_email" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="">Password</label>
+                      <input type="text" id ="edit_password" class="form-control" >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+
       
 
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 
-<script src="assets/js/main.js"></script>
+
 
 
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -132,29 +200,76 @@
   <script>
 
     $(document).ready(function(){
-        $("#data_table").click(function(e){
-            e.preventDefault();
+        // $("#data_table").click(function(e){
+        //     e.preventDefault();
 
 
-            var ajaxData = $(this).serialize();
+        //     var ajaxData = $(this).serialize();
 
-            $.ajax({
-                type: "get",
-                url: "/data",
+        //     $.ajax({
+        //         type: "get",
+        //         url: "/data",
            
+        //         success: function (response) {
 
-                success: function (response) {
-
-                    if(response.status == 201){
-                        console.log("Successfull");
-                    }
+        //             if(response.status == 201){
+        //                 console.log("Successfull");
+        //             }
                     
-                },
-                error: function (status, err) {
-            console.log(err);
-          }
-            });
+        //         },
+        //         error: function (status, err) {
+        //     console.log(err);
+        //   }
+        //     });
+        // })
+
+        $(".id_delete").click(function(e){
+          e.preventDefault();
+
+           var iddel = $(this).data("id");
+
+          $.ajax({
+            type: "post",
+            url: "/delete_practice",
+            data: {id: iddel},
+            success: function (response) {
+
+              if(response.status == 200){
+                setTimeout(()=>{
+                  window.location.replace(response.url);
+                },200)
+              }
+
+              
+            }
+          });
         })
+
+        $(".edit_btn").click(function(e){
+          e.preventDefault();
+
+          var idedit = $(this).data("id");
+
+          $.ajax({
+            type: "get",
+            url: "/edit_practice",
+            data: {id: idedit},
+            success: function (response) {
+              if(response.status == 200){
+                var data = response.data[0];
+                $('#edit_name').val(data.name);
+                $('#edit_username').val(data.user_name);
+                $('#edit_email').val(data.email);
+                $('#edit_password').val(data.password);
+                
+              }
+              
+            }
+          });
+        })
+
+
+
     })
   </script>
 
