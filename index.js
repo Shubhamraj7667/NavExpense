@@ -209,8 +209,24 @@ app.get("/edit_practice",(req,res)=>{
     })
 })
 
-app.get("/editform",(req,res)=>{
-    res.render("editform.ejs")
+//update practice
+
+app.post("/update_practice",(req,res)=>{
+    var id = req.body.id
+    var name = req.body.name;
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+
+    connection.query("UPDATE user_info SET name = ?, user_name =?, email = ?, password = ? WHERE id = ?",[name,username,email,password,id],function(err){
+     if(err){
+        res.send({status: 500, message : "Something went wrong"})
+     }else{
+        res.send({status: 200, message:"Successfully Updated", url : "/practice"})
+        // res.redirect("practice.ejs")
+     }
+    })
+
 })
 
 
