@@ -151,7 +151,6 @@ app.get("/practice", (req,res) =>{
         }else{
 
             
-            
             res.render("practice.ejs",{rows})
               
         }
