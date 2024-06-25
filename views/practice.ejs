@@ -101,7 +101,7 @@
                             <td><%=eachData.password%></td>
                             <td><button class="btn btn-danger id_delete" data-id = "<%=eachData.id%>">Delete</button></td>
                             <td><button class="btn btn-success edit_btn" data-id = "<%=eachData.id%>" data-bs-toggle="modal" data-bs-target="#editmodal">Edit</button></td>
-                            <td><button class="btn btn-success edit_btn" data-id = "<%=eachData.id%>" data-bs-toggle="modal" data-bs-target="#transactionmodal">Transaction Detail</button></td>
+                            <td><button class="btn btn-success transaction_btn" data-id = "<%=eachData.id%>" data-bs-toggle="modal" data-bs-target="#transactionmodal">Transaction Detail</button></td>
                         </tr>
                         
                         
@@ -207,20 +207,16 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">id</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Transaction Date</th>
+                        <th scope="col">Transaction type</th>
+                        <th scope="col">Comment</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class = "transaction_data">
                       
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                      </tr>
+                     
                     </tbody>
                   </table>
               </div>
@@ -349,6 +345,35 @@
 
 
         })
+
+
+        $(".transaction_btn").click(function(e){
+          
+
+          var transactionid = $(this).data("id");
+          
+
+          $.ajax({
+            type: "get",
+            url: "/practice_credit",
+            data: {id :transactionid },
+            success: function (response) {
+              console.log(response);
+              // var value = response.data;
+              // console.log(value);
+              $.each(response.data, function (key, value) {
+              $(".transaction_data").append(`<tr>`
+                +`<th scope = "row">`+ value['id']+`</th>`
+                +`<td>`+value['amount']+`</td>`
+                +`<td>`+value['transaction_date']+`</td>`
+                +`<td>`+value['transaction_type']+`</td>`
+                +`<td>`+value['comment']+`</td>`
+              )
+            })
+            }
+          });
+        })
+
 
 
 

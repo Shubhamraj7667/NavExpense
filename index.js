@@ -228,6 +228,21 @@ app.post("/update_practice",(req,res)=>{
 
 })
 
+//for transaction practice
+
+app.get("/practice_credit",(req,res)=>{
+    var id = req.query.id;
+
+
+    console.log(id);
+    connection.query("SELECT * FROM user_credit WHERE user_id = ?",[id],function(err,rows){
+        if(err){
+            console.log(err);
+        }else{
+            res.send({status: 200 , message : "Successful", data: rows})
+        }
+    })
+})
 
 
 
