@@ -340,17 +340,38 @@ app.post("/delete",(req,res)=>{
 
 //for editing transaction
 
-app.get("/get_credit",(req,res)=>{
-    const edit_id = req.body.id;
+app.get("/transaction_edit",(req,res)=>{
+    const edit_id = req.query.id;
+    console.log(edit_id);
 
     connection.query("SELECT * FROM user_credit WHERE id = ?",[edit_id], function(err,rows){
         if(err){
             console.log(err);
         }else{
-            res.send({rows});
+            console.log(rows);
+            res.send({status: 200, message: "Successful", data: rows});
         }
     })
 })
+
+//updating transaction
+
+app.post("/credit_update",(req,res)=>{
+    var id = req.body.id;
+    var date = req.body.date;
+    var amount = req.body.amount;
+    var transaction_type = req.body.transaction_type;
+    var comment = req.body.comment;
+
+    connection.query("UPDATE user_credit SET date = ?, amount = ? ,transaction_type = ?, comment = ? WHERE id = ?",[date,amount,transaction_type,comment,id],function(err,rows){
+        if(err){
+            res.send({status: 500, message: "Something went wrong"})
+        }else{
+            res.send({status: 200,message:"Updated Successfully", url: "/dashboard"})
+        }
+    })
+})
+
 
 
 
