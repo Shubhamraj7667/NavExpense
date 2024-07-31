@@ -52,6 +52,7 @@
     <button type="button" class="btn btn-primary" id = "data_table" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
       </button>
+      <button><a href="/pactice_2">practice</a></button>
       
       <!-- Modal -->
 
@@ -359,9 +360,11 @@
             data: {id :transactionid },
             success: function (response) {
               console.log(response);
-              // var value = response.data;
+              var value = response.data;
               // console.log(value);
-              $.each(response.data, function (key, value) {
+              $.each(value, function (key, value) {
+                // console.log(value);
+                console.log(key, value);
               $(".transaction_data").append(`<tr>`
                 +`<th scope = "row">`+ value['id']+`</th>`
                 +`<td>`+value['amount']+`</td>`

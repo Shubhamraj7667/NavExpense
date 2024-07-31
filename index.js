@@ -216,6 +216,7 @@ app.post("/update_practice",(req,res)=>{
     var username = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
+    console.log(id, "id");
 
     connection.query("UPDATE user_info SET name = ?, user_name =?, email = ?, password = ? WHERE id = ?",[name,username,email,password,id],function(err){
      if(err){
@@ -240,6 +241,7 @@ app.get("/practice_credit",(req,res)=>{
             console.log(err);
         }else{
             res.send({status: 200 , message : "Successful", data: rows})
+            console.log(rows);
         }
     })
 })
@@ -453,6 +455,70 @@ app.get("/get_credit",(req,res)=>{
             res.send({rows});
         }
     })
+})
+
+//for practice 2
+app.get("/pactice_2",(req,res)=>{
+
+    connection.query("SELECT * FROM user_info", function(err,rows){
+        if(err){
+            console.log(err);
+        }else{
+            res.render("pactice_2.ejs" , {rows})
+        }
+    })
+    
+})
+
+//for practice 2 delete
+app.post("/practice_del_2",(req,res)=>{
+    var delid = req.body.id;
+
+    connection.query("DELETE FROM user_info WHERE id = ?",[delid],function(err,rows){
+        if(err){
+            console.log(err);
+        }else{
+            res.send({status: 400, message: "Successfull", url: "/pactice_2"})
+            // res.render("pactice_2.ejs", {rows/''
+        }
+    })
+})
+
+//for pracctice 2 edit
+app.get("/edit_practice_id",(req,res)=>{
+    var editid = req.query.id;
+    connection.query("SELECT * FROM user_info WHERE id = ?",[editid],function(err,rows){
+        if(err){
+            console.log(err);
+        }else{
+            res.send({status: 200, message: "GET data successfully",data: rows})
+        }
+    })
+})
+
+//for practice 2 update
+
+app.post("/update_practice_2",(req,res)=>{
+    var id = req.body.id;
+    var name = req.body.name;
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+    // console.log(id);
+    // console.log(name);
+    // console.log(email);
+
+    connection.query("UPDATE user_info SET name = ?, user_name =?, email = ?, password = ? WHERE id = ?",[name,username,email,password,id],function(err){
+        if(err){
+            res.send({status: 500, message : err})
+            console.log(err);
+        }else{
+            res.send({status: 400, message : "Successfull", url: "/pactice_2"})
+            // console.log(rows);
+        
+        }
+    })
+
 })
 
 
